@@ -1,0 +1,10 @@
+,2,3,4,5,6,7,8,9,T,A
+A2,hit,hit,hit,double,double,hit,hit,hit,hit,hit
+A3,hit,hit,hit,double,double,hit,hit,hit,hit,hit
+A4,hit,hit,double,double,double,hit,hit,hit,hit,hit
+A5,hit,hit,double,double,double,hit,hit,hit,hit,hit
+A6,hit,double,double,double,double,hit,hit,hit,hit,hit
+A7,double,double,double,double,double,stay,stay,hit,hit,hit
+A8,stay,stay,stay,stay,double,stay,stay,stay,stay,stay
+A9,stay,stay,stay,stay,stay,stay,stay,stay,stay,stay
+AT,stay,stay,stay,stay,stay,stay,stay,stay,stay,stay
