@@ -162,7 +162,7 @@ class Strategy:
 
 	def bet(self, count, num_cards):
 		true_count = (count // ((num_cards // 52)+1))
-		bet_size = min(max((true_count-1)*self.min_betsize, 50), 10000) # 10 IS MINBETSIZE when count <= 1
+		bet_size = min(max((true_count-1)*self.min_betsize, 10), 200) # 10 IS MINBETSIZE when count <= 1
 		return bet_size, true_count
 
 	def action(self, player_cards, dealer_card, count):
@@ -189,6 +189,17 @@ class Strategy:
 						return "stay"
 					elif (dealer_card == '3') and (count >= 1.5):
 						return "stay"
+					elif (dealer_card == '4') and (count >= 0):
+						return "hit"
+					elif (dealer_card == '5') and (count >= -2):
+						return "hit"
+					elif (dealer_card == '6') and (count >= -1):
+						return "hit"
+				elif (score+1) == 13:
+					if (dealer_card == '2') and (count >= -1):
+						return "hit"
+					elif (dealer_card == '3') and (count >= -2):
+						return "hit"
 				elif (score+1) == 9:
 					if (dealer_card == '2') and (count >= 1.5):
 						return "double"
@@ -213,6 +224,17 @@ class Strategy:
 					return "stay"
 				elif (dealer_card == '3') and (count >= 1.5):
 					return "stay"
+				elif (dealer_card == '4') and (count >= 0):
+					return "hit"
+				elif (dealer_card == '5') and (count >= -2):
+					return "hit"
+				elif (dealer_card == '6') and (count >= -1):
+					return "hit"
+			elif (score) == 13:
+				if (dealer_card == '2') and (count >= -1):
+					return "hit"
+				elif (dealer_card == '3') and (count >= -2):
+					return "hit"
 			elif (score) == 9:
 				if (dealer_card == '2') and (count >= 1.5):
 						return "double"
@@ -235,7 +257,7 @@ class Strategy:
 
 class Game:
 
-	def __init__(self, num_decks=6, pen_rate=0.8, num_hands=1000, capital=50000, min_betsize=50, verbose=False):
+	def __init__(self, num_decks=6, pen_rate=0.8, num_hands=1000, capital=10000, min_betsize=10, verbose=False):
 		self.num_decks = num_decks
 		self.pen_rate = pen_rate
 		self.num_hands = num_hands
