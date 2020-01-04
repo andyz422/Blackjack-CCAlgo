@@ -412,27 +412,28 @@ class Game:
 		self.player.hands.insert(idx, hand1)
 
 		for i, hand in enumerate(self.player.hands[idx:idx+2]):
-			didhit = False
-			action = self.player.action(self.player.hands[idx+i], self.dealer.cards[-1], self.player.true_count)
-			while action != "stay":
-				if action == "hit":
-					didhit = True
-					self.player.hands[idx+i].add_card(self.deck.deal())
+			if hand.cards[0] != 'A':
+				didhit = False
+				action = self.player.action(self.player.hands[idx+i], self.dealer.cards[-1], self.player.true_count)
+				while action != "stay":
+					if action == "hit":
+						didhit = True
+						self.player.hands[idx+i].add_card(self.deck.deal())
+						if self.player.hands[idx+i].bust:
+							break
+
+					elif (action == "double"):
+						hand.add_card(self.deck.deal())
+						hand.double = (not didhit)
+
+					elif (action == "split"): 
+						idx = self.split(idx+i, layer=layer+1)
+						break
+
 					if self.player.hands[idx+i].bust:
 						break
 
-				elif (action == "double"):
-					hand.add_card(self.deck.deal())
-					hand.double = (not didhit)
-
-				elif (action == "split"): 
-					idx = self.split(idx+i, layer=layer+1)
-					break
-
-				if self.player.hands[idx+i].bust:
-					break
-
-				action = self.player.action(self.player.hands[idx+i], self.dealer.cards[-1], self.player.true_count)
+					action = self.player.action(self.player.hands[idx+i], self.dealer.cards[-1], self.player.true_count)
 
 		return idx
 
