@@ -162,7 +162,7 @@ class Strategy:
 
 	def bet(self, count, num_cards):
 		true_count = (count // ((num_cards // 52)+1))
-		bet_size = min(max((true_count-1)*self.min_betsize, 10), 200) # 10 IS MINBETSIZE when count <= 1
+		bet_size = min(max((true_count-1)*self.min_betsize, 10), 500) # 10 IS MINBETSIZE when count <= 1
 		return bet_size, true_count
 
 	def action(self, player_cards, dealer_card, count):
@@ -257,7 +257,7 @@ class Strategy:
 
 class Game:
 
-	def __init__(self, num_decks=6, pen_rate=0.8, num_hands=1000, capital=10000, min_betsize=10, verbose=False):
+	def __init__(self, num_decks=6, pen_rate=0.7, num_hands=1000, capital=10000, min_betsize=10, verbose=False):
 		self.num_decks = num_decks
 		self.pen_rate = pen_rate
 		self.num_hands = num_hands
@@ -268,6 +268,7 @@ class Game:
 		self.deck = Deck(self.num_decks, self.pen_rate)
 		self.dealer = Dealer()
 		self.player = Player(self.capital, self.min_betsize)
+		self.count_wins = {}
 		
 		# self.result = self.simulate()
 
@@ -279,6 +280,9 @@ class Game:
 				print(n, capital_path[-1])
 			# player bets based on count
 			self.player.bet(self.deck.count, self.deck.num_cards)
+
+			# deck_count = (self.deck.count // ((self.deck.num_cards//52)+1))
+
 			if self.verbose:
 				print("Count: ", self.deck.count, " True count: ", self.player.true_count)
 				print("Start Capital: ", capital_path[-1])
@@ -393,6 +397,8 @@ class Game:
 				break
 
 			self.player.strategy.change_betsize(self.player.capital//100)
+
+			# self.count_wins[deck_count] = (self.count_wins.get(deck_count, 0) + capital_path[-1] - capital_path[-2])
 
 		return capital_path
 
